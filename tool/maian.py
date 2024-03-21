@@ -71,6 +71,7 @@ def main(args):
     parser.add_argument("--debug",        help="Print extended debug info ", action='store_true')
     parser.add_argument("--max_inv",        help="The maximal number of function invocations (default 3) ", action='store')
     parser.add_argument("--solve_timeout",        help="Z3 solver timeout in milliseconds (default 10000, i.e. 10 seconds)", action='store')
+    parser.add_argument("--solc_args",        type=str,        help="Additional arguments for solc compiler", action='store')
 
     args = parser.parse_args( args )
 
@@ -94,7 +95,7 @@ def main(args):
         # First compile the contract and produce bytecode/abi
         fhashes = {}
         if args.soliditycode:
-            compile_contract(args.soliditycode[0])
+            compile_contract(args.soliditycode[0], args.solc_args)
             contract_code_path = 'out/'+args.soliditycode[1]+'.bin'
             if not os.path.isfile( contract_code_path ):  
                 print('\033[91m[-] Contract %s does NOT exist\033[0m' % args.soliditycode[1] )
