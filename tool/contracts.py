@@ -10,7 +10,7 @@ from subprocess import Popen, PIPE, STDOUT
 from values import MyGlobals
 from blockchain import *
 
-def compile_contract(filename):
+def compile_contract(filename, args=''):
 
     print('\033[1m[ ] Compiling Solidity contract from the file %s ... \033[0m' % filename, end='')
 
@@ -22,7 +22,7 @@ def compile_contract(filename):
     with open(filename, 'r') as myfile:
         code=myfile.read()
     
-    p=Popen(['solc','--bin','--abi','-o','out',source_file,'--overwrite'], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+    p=Popen(['solc','--bin','--abi','-o','out',source_file,'--overwrite',args], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     solo = ''
     while p.poll() is None:
         l = p.stdout.readline()
